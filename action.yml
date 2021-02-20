@@ -1,6 +1,8 @@
 name: GitHub Pages Overwriter
 author: rayluo
-description: Overwrite your Github Pages branch with the content of current workdir, thus deploy/publish without polluting your repo history.
+
+# Description needs to be shorter than 125 bytes.
+description: Overwrite your Github Pages branch with content of current workdir, thus deploy/publish without polluting your repo history.
 
 inputs:
   target-branch:
