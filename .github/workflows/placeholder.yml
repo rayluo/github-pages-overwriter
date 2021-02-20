@@ -1,0 +1,7 @@
+name: Github requires a workflow otherwise I am not allowed to publish my action
+on: [push]
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Do nothing"
