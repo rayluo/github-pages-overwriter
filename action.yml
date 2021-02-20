@@ -1,0 +1,38 @@
+name: GitHub Pages Overwriter
+author: rayluo
+
+# Description needs to be shorter than 125 bytes.
+description: Overwrite your Github Pages branch with content of current workdir, thus deploy/publish without polluting your repo history.
+
+inputs:
+  target-branch:
+    description: The name of the branch that would be OVERWRITTEN by current workdir, you will then configure your Github Pages to serve this branch.
+    required: false
+    default: gh-pages
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        # The following 2 lines are not really necessary,
+        # because we do not push current branch.
+        # But we still do that here, just to be conceptually correct.
+        git branch -f ${{ inputs.target-branch }} HEAD
+        git checkout ${{ inputs.target-branch }}
+
+        # The commit and push happen to work without authentication
+        # https://docs.github.com/en/actions/reference/authentication-in-a-workflow
+        git config user.name "Github Pages Overwriter"
+        git config user.email "GithubPagesOverwriter@users.noreply.github.com"
+        git add -A
+        git commit -m "Automated publish"
+
+        # Explicitly defining target,
+        # so that it would work even when target does not yet exist
+        git push -f origin HEAD:${{ inputs.target-branch }}
+
+branding:
+  icon: copy
+  color: green
+
