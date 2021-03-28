@@ -10,7 +10,8 @@ What is it?
 Github Page Overwriter is:
 
 * the **simplest** possible Github Page publisher, because it requires no configuration
-* the **most lightweight** Github Page publisher (therefore the **fastest** possible),
+* the **most lightweight** Github Page publisher
+  (therefore the **fastest** possible - typically around 2 seconds),
   because its implementation requires no runtime dependency other than git itself.
 * the **cleanest** possible Github Page publisher,
   because it is designed to leave no extra commits in your repo history.
@@ -19,30 +20,52 @@ Github Page Overwriter is:
 How to use it?
 --------------
 
-Since Github Page Overwriter requires no configuration (more on this later),
-you simply add it as one extra step into your own github action.
+1.  Github Page Overwriter requires no mandatory configuration.
+    You simply add it as one extra step into your own github action.
 
-```yaml
-name: Your github action
+    ```yaml
+    name: Your github action
 
-on:
-  push:
-    branches:
-      - master
+    on:
+      push:
+        branches:
+          # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
+          - *
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v2
+    jobs:
+      publish:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out
+            uses: actions/checkout@v2
 
-      - name: Generate your content
-        run: ......  # Your project's generate step here
+          - name: Generate your content
+            run: echo "Optional placeholder. Put your project's static website generator command here."
 
-      - name: Publish current workdir (which contains generated content) to GitHub Pages
-        uses: rayluo/github-pages-overwriter@v1
-```
+          - name: Publish current workdir (which contains generated content) to GitHub Pages
+            uses: rayluo/github-pages-overwriter@v1.1
+
+            with:
+
+              # Optional. Default value "." means the root directory of your project will be published.
+              # You can use whatever directory your project uses, for example "wwwroot".
+              # Such a directory does *not* have to already exist in your repo,
+              # it could be an output directory created dynamically by your static website builder.
+              source-directory: .
+
+              # Optional. Default value "gh_pages".
+              # It specifies the temporary branch which hosts the static website.
+              # Each build will OVERWRITE this branch.
+              target-branch: gh_pages
+    ```
+
+
+2.  In your Github Pages setting, choose your publish source like this:
+
+    | Github Page Overwriter settings | Github Pages settings |
+    | ------------------------------- | --------------------- |
+    | `source-directory` can be any directory you choose | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. ![Choose "/ (root)" as folder](github-pages-settings.png) |
+    | `target-branch` can be any branch that match the setting on the right | Choose any branch that matches the `target-branch` setting on the left |
 
 
 How does it work?
@@ -97,25 +120,4 @@ thus won't become part of your repo's long term history.
                      /
     D---E---F---G---H  main
    ```
-
-
-Configuration
--------------
-
-Well, you can still configure the target branch from the default `gh-pages`
-to something else you want.
-
-```yaml
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - ...
-      - name: Publish generated content to GitHub Pages
-        uses: rayluo/github-pages-overwriter@v1
-        with:
-          target-branch: my_website_branch
-```
-
-But why bother? You may rather configure your Github repo to publish the conventional `gh-pages` branch instead.
 
