@@ -30,7 +30,7 @@ How to use it?
       push:
         branches:
           # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
-          - *
+          - '*'
 
     jobs:
       publish:
