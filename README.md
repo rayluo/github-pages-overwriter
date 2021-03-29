@@ -1,7 +1,14 @@
 Github Page Overwriter
 ======================
 
-A Github Action that overwrites your Github Pages branch with the content of current workdir, thus deploy/publish without polluting your repo history.
+This is a Github Action that overwrites your Github Pages branch with the content of current workdir, thus deploy/publish without polluting your repo history.
+
+* This is a [summary of what `Github Page Overwriter` is](#what-is-it)
+* If you can't wait to get started, this is the [tutorial](#how-to-use-it)
+* This is an in-depth description on
+  [how this `Github Page Overwriter` tool work (differently)](#how-does-it-work)
+* If you are still skeptical, this is our answer to
+  ["why yet another Github Page publish action"](#but-why).
 
 
 What is it?
@@ -11,10 +18,10 @@ Github Page Overwriter is:
 
 * the **simplest** possible Github Page publisher, because it requires no configuration
 * the **most lightweight** Github Page publisher
-  (therefore the **fastest** possible - typically around 2 seconds),
   because its implementation requires no runtime dependency other than git itself.
 * the **cleanest** possible Github Page publisher,
-  because it is designed to leave no extra commits in your repo history.
+  because it is designed to leave no extra commits in your repo history
+  (its deployment branch would be overwritten each time).
 
 
 How to use it?
@@ -120,4 +127,57 @@ thus won't become part of your repo's long term history.
                      /
     D---E---F---G---H  main
    ```
+
+
+But why?
+--------
+
+Why yet another new Github Pages deployment tool? What is its uniqueness?
+
+I did look around. But the following reasons made me start this `Github Pages Overwriter` project.
+
+1.  The What (What it does, or does not do)
+
+    I prefer a git tenet of never store build artifacts inside a repo
+    (at least not store as part of the permanent history).
+    Some existing github actions possibly also satisfy that,
+    but none of them explicitly promises such behavior in their contract (i.e. their doc).
+
+    In this project, not only it is named “Github Page OVERWRITER”
+    which hints that the generated content would be ephemeral and overwritten in next deployment;
+    it also documented such commitment in its [“how does it work” section](#how-does-it-work).
+
+    In order to examine whether an existing Github Pages deployment action satisfies the aforementioned tenet,
+    I’d need to look into their implementation.
+    But, many of them turn out to be implemented by one programming language or another,
+    running in some sort of container/runner.
+    I certainly do not know all existing languages,
+    so I cannot easily review any given 3rd-party github action.
+    This brings me to my next point.
+
+
+2.  The How (How it is implemented)
+
+    To satisfy tenet in #1, one only needs to run several git commands in the right way,
+    without much external dependency.
+    Feel free to look into the “Github Page Overwritter” source code to see
+    how it only uses git command line tool to achieve that.
+    Personally, it took me less time to write a new action to do what I want,
+    then to sieve through existing actions to see whether one of them happens to suit my need.
+
+3.  The Security.
+
+    Any 3rd-party github action could potentially mess up with your central repo.
+    [Security concern on github action is a real thing](https://github.community/t/are-github-actions-safe-to-use/17895).
+    The only way to be sure, is to review their implementation.
+    This is another reason why “#2 how it is implemented” is important.
+    I feel more comfortable to trust an action that I can fully understand what it works.
+    So should you.
+
+4.  The Simplicity.
+
+    Based on #1 and #2, there is really not much to configure.
+    A simpler configuration means easier to get started.
+
+    For example, Github Page Ovewriter does not require any github token to be configured.
 
