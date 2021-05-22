@@ -49,10 +49,10 @@ runs:
       # But that seems like an overkill. So, we'd use "if" in bash instead.
       run: >  # https://yaml-multiline.info/
         if [ "${{ inputs.source-directory }}" == "." ]; then
-          git push -f origin HEAD:${{ inputs.target-branch }}
+          git push -f origin HEAD:refs/heads/${{ inputs.target-branch }}
         else
           # Inspired from https://gist.github.com/cobyism/4730490#gistcomment-1374989
-          git push -f origin `git subtree split -P ${{ inputs.source-directory }}`:${{ inputs.target-branch }}
+          git push -f origin `git subtree split -P ${{ inputs.source-directory }}`:refs/heads/${{ inputs.target-branch }}
         fi
 
 branding:
