@@ -50,7 +50,7 @@ How to use it?
             run: echo "Optional placeholder. Put your project's static website generator command here."
 
           - name: Publish current workdir (which contains generated content) to GitHub Pages
-            uses: rayluo/github-pages-overwriter@v1.1
+            uses: rayluo/github-pages-overwriter@v1.2
 
             with:
 
