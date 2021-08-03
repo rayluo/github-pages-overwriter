@@ -67,12 +67,12 @@ How to use it?
     ```
 
 
-2.  In your Github Pages setting, choose your publish source like this:
+2.  In your Github Pages setting, choose your publish source to match your Github Page Overwriter (GPO) settings.
 
-    | Github Page Overwriter settings | Github Pages settings |
-    | ------------------------------- | --------------------- |
-    | `source-directory` can be any directory you choose | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. ![Choose "/ (root)" as folder](github-pages-settings.png) |
-    | `target-branch` can be any branch that match the setting on the right | Choose any branch that matches the `target-branch` setting on the left |
+    | Github Page Overwriter (GPO) settings in your workflow's yml file | Github Pages settings |
+    | ----------------------------------------------------------------- | --------------------- |
+    | `target-branch` could be any branch you want to *overwrite* with your static website. By default, it will be "gh_pages". | You MUST choose the branch that matches the `target-branch` setting on the left |
+    | `source-directory` MUST be the directory containing your "index.html" | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. So, a typical setting looks like this: ![Choose "/ (root)" as folder](github-pages-settings.png) |
 
 
 How does it work?
