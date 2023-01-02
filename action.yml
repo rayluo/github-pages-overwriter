@@ -27,16 +27,20 @@ runs:
         git branch -f ${{ inputs.target-branch }} HEAD
         git checkout ${{ inputs.target-branch }}
 
+        # The commit and push happen to work without authentication
+        # https://docs.github.com/en/actions/reference/authentication-in-a-workflow
+        git config user.name "Github Pages Overwriter"
+        git config user.email "GithubPagesOverwriter@users.noreply.github.com"
+
+        # The previous commit message may contain reference to github issues,
+        # we wipe it out, so that it won't show up in the inevitable duplicate commit.
+        git commit --amend -m "This commit will be automatically published"
+
         # Generate such a new file to make sure the subsequent commit would succeed
         # Such a file WITHOUT leading dot (.) is also visible in outcome website.
         # FYI: filename with leading dot (.) or underscore (_) would be ignored by Jekyll,
         # which Github Pages depends on. So we use a normal filename here.
         date > ${{ inputs.source-directory}}/publish_date.txt
-
-        # The commit and push happen to work without authentication
-        # https://docs.github.com/en/actions/reference/authentication-in-a-workflow
-        git config user.name "Github Pages Overwriter"
-        git config user.email "GithubPagesOverwriter@users.noreply.github.com"
         git add -A
         git commit -m "Automated publish"
 

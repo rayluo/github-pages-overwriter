@@ -44,13 +44,13 @@ How to use it?
         runs-on: ubuntu-latest
         steps:
           - name: Check out
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
 
           - name: Generate your content
             run: echo "Optional placeholder. Put your project's static website generator command here."
 
           - name: Publish current workdir (which contains generated content) to GitHub Pages
-            uses: rayluo/github-pages-overwriter@v1.1
+            uses: rayluo/github-pages-overwriter@v1.3
 
             with:
 
@@ -67,12 +67,12 @@ How to use it?
     ```
 
 
-2.  In your Github Pages setting, choose your publish source like this:
+2.  In your Github Pages setting, choose your publish source to match your Github Page Overwriter (GPO) settings.
 
-    | Github Page Overwriter settings | Github Pages settings |
-    | ------------------------------- | --------------------- |
-    | `source-directory` can be any directory you choose | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. ![Choose "/ (root)" as folder](github-pages-settings.png) |
-    | `target-branch` can be any branch that match the setting on the right | Choose any branch that matches the `target-branch` setting on the left |
+    | Github Page Overwriter (GPO) settings in your workflow's yml file | Github Pages settings |
+    | ----------------------------------------------------------------- | --------------------- |
+    | `target-branch` could be any branch you want to *overwrite* with your static website. By default, it will be "gh_pages". | You MUST choose the branch that matches the `target-branch` setting on the left |
+    | `source-directory` MUST be the directory containing your "index.html" | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. So, a typical setting looks like this: ![Choose "/ (root)" as folder](github-pages-settings.png) |
 
 
 How does it work?
@@ -168,7 +168,7 @@ I did look around. But the following reasons made me start this `Github Pages Ov
 3.  The Security.
 
     Any 3rd-party github action could potentially mess up with your central repo.
-    [Security concern on github action is a real thing](https://github.community/t/are-github-actions-safe-to-use/17895).
+    [Security concern on github action is a real thing](https://blog.gitguardian.com/github-actions-security-cheat-sheet/#use-specific-action-version-tags).
     The only way to be sure, is to review their implementation.
     This is another reason why “#2 how it is implemented” is important.
     I feel more comfortable to trust an action that I can fully understand what it works.
