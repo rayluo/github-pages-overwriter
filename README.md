@@ -44,7 +44,7 @@ How to use it?
         runs-on: ubuntu-latest
         steps:
           - name: Check out
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
 
           - name: Generate your content
             run: echo "Optional placeholder. Put your project's static website generator command here."
