@@ -50,7 +50,7 @@ How to use it?
             run: echo "Optional placeholder. Put your project's static website generator command here."
 
           - name: Publish current workdir (which contains generated content) to GitHub Pages
-            uses: rayluo/github-pages-overwriter@v1.2
+            uses: rayluo/github-pages-overwriter@v1.3
 
             with:
 
@@ -168,7 +168,7 @@ I did look around. But the following reasons made me start this `Github Pages Ov
 3.  The Security.
 
     Any 3rd-party github action could potentially mess up with your central repo.
-    [Security concern on github action is a real thing](https://github.community/t/are-github-actions-safe-to-use/17895).
+    [Security concern on github action is a real thing](https://blog.gitguardian.com/github-actions-security-cheat-sheet/#use-specific-action-version-tags).
     The only way to be sure, is to review their implementation.
     This is another reason why “#2 how it is implemented” is important.
     I feel more comfortable to trust an action that I can fully understand what it works.
