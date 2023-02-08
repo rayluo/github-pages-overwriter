@@ -41,7 +41,7 @@ runs:
         # FYI: filename with leading dot (.) or underscore (_) would be ignored by Jekyll,
         # which Github Pages depends on. So we use a normal filename here.
         date > ${{ inputs.source-directory}}/publish_date.txt
-        git add -A
+        git add --force ${{ inputs.source-directory }}
         git commit -m "Automated publish"
 
     - name: Push the build output to github pages
