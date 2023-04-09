@@ -60,10 +60,10 @@ How to use it?
               # it could be an output directory created dynamically by your static website builder.
               source-directory: .
 
-              # Optional. Default value "gh_pages".
+              # Optional. Default value "gh-pages".
               # It specifies the temporary branch which hosts the static website.
               # Each build will OVERWRITE this branch.
-              target-branch: gh_pages
+              target-branch: gh-pages
     ```
 
 
@@ -71,7 +71,7 @@ How to use it?
 
     | Github Page Overwriter (GPO) settings in your workflow's yml file | Github Pages settings |
     | ----------------------------------------------------------------- | --------------------- |
-    | `target-branch` could be any branch you want to *overwrite* with your static website. By default, it will be "gh_pages". | You MUST choose the branch that matches the `target-branch` setting on the left |
+    | `target-branch` could be any branch you want to *overwrite* with your static website. By default, it will be "gh-pages". | You MUST choose the branch that matches the `target-branch` setting on the left |
     | `source-directory` MUST be the directory containing your "index.html" | *Always* choose folder `/ (root)` for your publishing source, regardless of what `source-directory` is. So, a typical setting looks like this: ![Choose "/ (root)" as folder](github-pages-settings.png) |
 
 
