@@ -24,8 +24,8 @@ runs:
         # because we do not intend to push current branch.
         # But we choose to use target branch name as a temporary local work branch,
         # thus avoid a potential error of committing to the trigger branch.
-        git branch -f ${{ inputs.target-branch }} HEAD
-        git checkout ${{ inputs.target-branch }}
+        git branch -f ${INPUTS_TARGET_BRANCH} HEAD
+        git checkout ${INPUTS_TARGET_BRANCH}
 
         # The commit and push happen to work without authentication
         # https://docs.github.com/en/actions/reference/authentication-in-a-workflow
@@ -40,9 +40,12 @@ runs:
         # Such a file WITHOUT leading dot (.) is also visible in outcome website.
         # FYI: filename with leading dot (.) or underscore (_) would be ignored by Jekyll,
         # which Github Pages depends on. So we use a normal filename here.
-        date > ${{ inputs.source-directory}}/publish_date.txt
-        git add --force ${{ inputs.source-directory }}
+        date > ${INPUTS_SOURCE_DIRECTORY}/publish_date.txt
+        git add --force ${INPUTS_SOURCE_DIRECTORY}
         git commit -m "Automated publish"
+      env:
+        INPUTS_TARGET_BRANCH: ${{ inputs.target-branch }}
+        INPUTS_SOURCE_DIRECTORY: ${{ inputs.source-directory }}
 
     - name: Push the build output to github pages
       shell: bash
@@ -52,12 +55,15 @@ runs:
       # (https://github.com/marketplace/actions/conditional-value-for-github-action)
       # But that seems like an overkill. So, we'd use "if" in bash instead.
       run: >  # https://yaml-multiline.info/
-        if [ "${{ inputs.source-directory }}" == "." ]; then
-          git push -f origin HEAD:refs/heads/${{ inputs.target-branch }}
+        if [ "${INPUTS_SOURCE_DIRECTORY}" == "." ]; then
+          git push -f origin HEAD:refs/heads/${INPUTS_TARGET_BRANCH}
         else
           # Inspired from https://gist.github.com/cobyism/4730490#gistcomment-1374989
-          git push -f origin `git subtree split -P ${{ inputs.source-directory }}`:refs/heads/${{ inputs.target-branch }}
+          git push -f origin `git subtree split -P ${INPUTS_SOURCE_DIRECTORY}`:refs/heads/${INPUTS_TARGET_BRANCH}
         fi
+      env:
+        INPUTS_SOURCE_DIRECTORY: ${{ inputs.source-directory }}
+        INPUTS_TARGET_BRANCH: ${{ inputs.target-branch }}
 
 branding:
   icon: copy
